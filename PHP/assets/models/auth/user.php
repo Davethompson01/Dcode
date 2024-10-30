@@ -5,8 +5,8 @@ namespace App\Models;
 
 use App\Utilities\Authorization;
 require_once __DIR__ . "/../../vendor/autoload.php";
-require_once __DIR__ . "/../../utilities/authorisation.php";
-include_once(__DIR__ . '/../../Config/Database.php');
+require_once __DIR__ . "/../../../utilities/tokengenerator.php";
+include_once(__DIR__ . '/../../../config/Database.php');
 
 use PDO;
 use Firebase\JWT\JWT;

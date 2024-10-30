@@ -4,9 +4,9 @@
 namespace App\Controllers;
 
 require_once(__DIR__ . "/../../vendor/autoload.php");
-require_once(__DIR__ . '/../Models/adminsignup.php');
+require_once(__DIR__ . '/../models/auth/Signup.php');
 require_once(__DIR__ . "/../../utilities/tokengenerator.php");
-require_once(__DIR__ . "/../Requests/adminrequest.php");
+require_once(__DIR__ . "/../Requests/Signuprequest.php");
 use App\Config\Database;
 use App\Models\User;
 use App\Utilities\TokenGenerator;
