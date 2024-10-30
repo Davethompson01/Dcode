@@ -2,8 +2,8 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
-const productRoutes = require('./routes/productRoutes');
-const authMiddleware = require('./middleware/authMiddleware');
+const productRoutes = require('../assets/routes/product');
+const authMiddleware = require('../assets/middlewares/auth');
 
 const app = express();
 
