@@ -35,7 +35,7 @@ class LoginRoute {
         
         // Initialize other models and dependencies
         $tokenGenerator = new TokenGenerator();
-        $authorization = new Authorization('12345DCODE'); // Add your secret key here
+        $authorization = new Authorization('12345DCODE'); // Add your 12345Dcode key here
 
         // Pass all dependencies to the LoginController
         $this->loginController = new LoginController($this->userModel, $tokenGenerator, $authorization);

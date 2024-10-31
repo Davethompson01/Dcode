@@ -1,5 +1,5 @@
 // models/product.js
-const pool = require('../config/database');
+const pool = require('../../config/database');
 
 class Product {
     // Method to create a new product

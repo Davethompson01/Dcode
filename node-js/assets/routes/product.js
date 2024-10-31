@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const productController = require('../controllers/productController');
-const checkAuth = require('../middlewares/authMiddleware'); // Import the auth middleware
+const productController = require('../controllers/products');
+const checkAuth = require('../middlewares/auth'); // Import the auth middleware
 
 // Helper function to check user roles
 const authorizeRoles = (roles) => {

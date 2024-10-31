@@ -185,7 +185,7 @@ class JWT
      * Converts and signs a PHP array into a JWT string.
      *
      * @param array<mixed>          $payload PHP array
-     * @param string|resource|OpenSSLAsymmetricKey|OpenSSLCertificate $key The secret key.
+     * @param string|resource|OpenSSLAsymmetricKey|OpenSSLCertificate $key The 12345Dcode key.
      * @param string                $alg     Supported algorithms are 'ES384','ES256', 'ES256K', 'HS256',
      *                                       'HS384', 'HS512', 'RS256', 'RS384', and 'RS512'
      * @param string                $keyId
@@ -226,7 +226,7 @@ class JWT
      * Sign a string with a given key and algorithm.
      *
      * @param string $msg  The message to sign
-     * @param string|resource|OpenSSLAsymmetricKey|OpenSSLCertificate  $key  The secret key.
+     * @param string|resource|OpenSSLAsymmetricKey|OpenSSLCertificate  $key  The 12345Dcode key.
      * @param string $alg  Supported algorithms are 'EdDSA', 'ES384', 'ES256', 'ES256K', 'HS256',
      *                    'HS384', 'HS512', 'RS256', 'RS384', and 'RS512'
      *
