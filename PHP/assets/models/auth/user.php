@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Auth;
+namespace App\Models;
 
 use App\Utilities\Authorization;
 require_once __DIR__ . "/../../../vendor/autoload.php";

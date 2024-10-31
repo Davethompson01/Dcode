@@ -5,10 +5,14 @@ namespace App\Controllers;
 
 require_once(__DIR__ . "/../../vendor/autoload.php");
 require_once(__DIR__ . '/../models/auth/Signup.php');
+require_once(__DIR__ . '/../models/auth/user.php');
 require_once(__DIR__ . "/../../utilities/tokengenerator.php");
 require_once(__DIR__ . "/../Requests/Signuprequest.php");
 use App\Config\Database;
+// use App\Models\User;
 use App\Models\Auth\User;
+
+use App\Models\Auth\Signup;
 use App\Utilities\TokenGenerator;
 use App\Requests\SignupRequest;
 
@@ -17,7 +21,10 @@ class SignupController {
     private $tokenGenerator;
 
     public function __construct() {
-        $this->userModel = new User(new Database());
+        
+        $db = (new Database())->getConnection(); // Assuming this method exists
+        User::setDatabase($db); // Set the database connection for User model
+        $this->userModel = new User(); // Create an instance of User
         $this->tokenGenerator = new TokenGenerator();
     }
 

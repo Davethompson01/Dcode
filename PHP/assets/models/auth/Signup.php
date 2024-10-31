@@ -7,7 +7,7 @@ use App\Config\Database;
 use PDO;
 use Exception;
 
-class signup {
+class Signup {
     private $connection;
 
     public function __construct(Database $database) {
