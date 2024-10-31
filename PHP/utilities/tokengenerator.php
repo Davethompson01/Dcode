@@ -9,7 +9,7 @@ use Firebase\JWT\ExpiredException;
 use Firebase\JWT\SignatureInvalidException;
 
 class TokenGenerator {
-    private static $secretKey = '1234Sheda';
+    private static $secretKey = '12345DCODE';
     private static $algorithm = 'HS256';
     public function generateToken($userId, $username, $email, $isAdminSignup) {
         // Example code to assign role

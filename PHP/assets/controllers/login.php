@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Controllers;
+
 require_once __DIR__ . "/../models/auth/user.php";
 require_once __DIR__ . "/../models/auth/login.php";
-
 require_once __DIR__ . "/../../utilities/tokengenerator.php";
-require_once __DIR__ . "/../../utilities/authorisation.php"; // Add this
+require_once __DIR__ . "/../../utilities/authorisation.php";
 
+use App\Models\Auth\Login;
 use App\Models\Auth\User;
 use App\Utilities\TokenGenerator;
 use App\Utilities\Authorization;
@@ -19,54 +20,66 @@ class LoginController {
     public function __construct(User $userModel, TokenGenerator $tokenGenerator, Authorization $authorization) {
         $this->userModel = $userModel;
         $this->tokenGenerator = $tokenGenerator;
-        $this->authorization = $authorization; // Add authorization
+        $this->authorization = $authorization;
     }
 
     public function handleLogin($email, $password) {
-        // Authenticate user (assuming userModel has a method for this)
+        // Check if the email belongs to a user
         $user = $this->userModel->checkUser($email, $password);
-    
-        if ($user) {
-            $userId = $user['id'] ?? null;  // Use null if 'id' is not set
-            $username = $user['username'] ?? 'guest'; // Default to 'guest' if 'username' is not set
-            $userRole = $user['role'] ?? 'user';  // Default to 'user' if 'role' is not set
-            
-            // Check if user is an admin
-            $isAdminSignup = ($userRole === 'admin'); // Set true if the user is an admin, otherwise false
-    
-            // Now generate the token
-            $jwtToken = $this->tokenGenerator->generateToken($userId, $username, $email, $isAdminSignup);
-    
-            // Return response
-            return [
-                'status' => 'success',
-                'message' => 'Login successful.',
-                'token' => $jwtToken,
-                'username' => $username,
-                'role' => $userRole,
-                'user_details' => $user
-            ];
+        
+        // If not found as a user, check if it's an admin
+        if (!$user) {
+            $user = $this->userModel->checkAdminEmail($email, $password);
+            if ($user) {
+                $user['role'] = 'admin'; // Set role as admin if found in admin table
+            }
         } else {
+            $user['role'] = 'user'; // Set role as user if found in users table
+        }
+    
+        // If neither user nor admin found, return error
+        if (!$user) {
             return [
                 'status' => 'error',
                 'message' => 'Invalid email or password.'
             ];
         }
+    
+        // Extract user details and assign proper username and role
+        $userId = $user['id'] ?? null;
+        $username = $user['username'] ?? $email; // Use email if username is null
+        $userRole = $user['role']; // User role is set by the check above
+        
+        // Generate the token with correct role
+        $jwtToken = $this->tokenGenerator->generateToken(
+            $userId, 
+            $username, 
+            $email, 
+            $userRole
+        );
+    
+        // Return response with user details and token
+        return [
+            'status' => 'success',
+            'message' => 'Login successful.',
+            'token' => $jwtToken,
+            'username' => $username, // This will no longer be "guest"
+            'role' => $userRole,
+            'user_details' => $user
+        ];
     }
     
     
 
-
-    // Example of a function that requires authorization
+    // Optional authorization-based profile retrieval
     // public function getProfile($request) {
-    //     $token = $request['token']; // Assume token is passed in request headers
+    //     $token = $request['token'];
     //     $authResponse = $this->authorization->authorize($token);
-
+    //
     //     if ($authResponse['status'] === 'error') {
     //         return ['status' => 'error', 'message' => $authResponse['message']];
     //     }
-
-    //     // Authorization successful, proceed with profile retrieval
+    //
     //     $userData = $authResponse['data'];
     //     return ['status' => 'success', 'message' => 'Profile retrieved.', 'user' => $userData];
     // }

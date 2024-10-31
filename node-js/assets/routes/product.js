@@ -1,10 +1,20 @@
 const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/productController');
-const checkAuth = require('../middlewares/authMiddleware'); // Import the middleware
+const checkAuth = require('../middlewares/authMiddleware'); // Import the auth middleware
 
-// Route to upload products
-router.post('/upload', checkAuth, async (req, res) => {
+// Helper function to check user roles
+const authorizeRoles = (roles) => {
+    return (req, res, next) => {
+        if (!roles.includes(req.user.role)) {
+            return res.status(403).json({ status: 'error', message: 'You do not have permission to create products.' });
+        }
+        next();
+    };
+};
+
+// Route to upload products - restrict to specific roles only
+router.post('/upload', checkAuth, authorizeRoles(['admin', 'seller']), async (req, res) => {
     try {
         const response = await productController.uploadProducts(req.body, req.user); // Pass user info if needed
         res.json(response);

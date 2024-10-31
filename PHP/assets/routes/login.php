@@ -7,36 +7,38 @@ require_once(__DIR__ . "/../models/auth/Signup.php");
 require_once(__DIR__ . "/../views/login.php");
 require_once(__DIR__ . "/../models/auth/user.php");
 require_once(__DIR__ . "/../models/auth/login.php");
-
 require_once(__DIR__ . "/../../utilities/TokenGenerator.php");
-require_once(__DIR__ . "/../../utilities/authorisation.php"); 
+require_once(__DIR__ . "/../../utilities/authorisation.php");
 
 use App\Controllers\LoginController;
 use App\Models\Auth\User;
-// use App\Models\Auth\User;
-// use App\Models\User;
+use App\Models\Auth\Signup;
 use App\Controllers\LoginView;
 use App\Config\Database;
 use App\Utilities\TokenGenerator;
 use App\Utilities\Authorization;
-
 class LoginRoute {
     private $loginController;
-    private $database;
     private $loginView;
+    private $userModel;
 
     public function __construct() {
         // Create database connection
-        $this->database = new Database();
-        $this->database = $this->database->getConnection();
+        $database = new Database();
+        $db = $database->getConnection(); // Get the PDO connection
 
-        // Initialize necessary utilities and controllers
-        $userModel = new User($this->database);
+        // Set the database connection for User model
+        User::setDatabase($db); // Use the static method to set the database connection
+        
+        // Initialize the User model without passing the database connection
+        $this->userModel = new User(); 
+        
+        // Initialize other models and dependencies
         $tokenGenerator = new TokenGenerator();
-        $authorization = new Authorization('1234Sheda'); // Add your secret key here
+        $authorization = new Authorization('12345DCODE'); // Add your secret key here
 
-        // Pass all three dependencies to the LoginController
-        $this->loginController = new LoginController($userModel, $tokenGenerator, $authorization);
+        // Pass all dependencies to the LoginController
+        $this->loginController = new LoginController($this->userModel, $tokenGenerator, $authorization);
         $this->loginView = new LoginView();
     }
 

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Controllers;
 
 require_once(__DIR__ . "/../../vendor/autoload.php");
@@ -8,21 +7,22 @@ require_once(__DIR__ . '/../models/auth/Signup.php');
 require_once(__DIR__ . '/../models/auth/user.php');
 require_once(__DIR__ . "/../../utilities/tokengenerator.php");
 require_once(__DIR__ . "/../Requests/Signuprequest.php");
-use App\Config\Database;
-// use App\Models\User;
-use App\Models\Auth\User;
 
+use App\Config\Database;
+use App\Models\Auth\User;
 use App\Models\Auth\Signup;
 use App\Utilities\TokenGenerator;
 use App\Requests\SignupRequest;
 
 class SignupController {
     private $userModel;
+    private $signupModel; // Add this line
     private $tokenGenerator;
 
     public function __construct() {
-        
-        $db = (new Database())->getConnection(); // Assuming this method exists
+        $database = new Database(); // Create Database instance
+        $this->signupModel = new Signup($database); // Pass the Database instance
+        $db = $database->getConnection(); // Get the PDO connection
         User::setDatabase($db); // Set the database connection for User model
         $this->userModel = new User(); // Create an instance of User
         $this->tokenGenerator = new TokenGenerator();
@@ -46,16 +46,17 @@ class SignupController {
             return; // Errors handled in the request class
         }
 
-        if ($this->userModel->checkEmail($data['email'])) {
+        // Call the checkEmail method from the Signup model
+        if ($this->signupModel->checkEmail($data['email'])) {
             $this->sendResponse(['status' => 'error', 'message' => 'Email already taken.']);
             return;
         }
 
-        $userId = $isAdminSignup ? $this->userModel->createAdminUser($data) : $this->userModel->createUser($data);
+        $userId = $isAdminSignup ? $this->signupModel->createAdminUser($data) : $this->signupModel->createUser($data);
         
         if ($userId) {
             $token = $this->tokenGenerator->generateToken($userId, $data['username'], $data['email'], $isAdminSignup);
-            $this->userModel->updateToken($userId, $token);
+            $this->signupModel->updateToken($userId, $token);
 
             $this->sendResponse([
                 'status' => 'success',

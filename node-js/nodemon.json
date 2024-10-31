@@ -1,0 +1,6 @@
+{
+  "watch": ["api"],
+  "ignore": ["src/ignore_this_file.js"],
+  "ext": "js,json",
+  "exec": "node api/order.js"
+}
