@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Auth;
 
 require_once(__DIR__ . "/../../../config/Database.php");
 use App\Config\Database;
 use PDO;
 use Exception;
 
-class User {
+class signup {
     private $connection;
 
     public function __construct(Database $database) {

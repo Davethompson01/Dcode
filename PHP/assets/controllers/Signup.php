@@ -8,7 +8,7 @@ require_once(__DIR__ . '/../models/auth/Signup.php');
 require_once(__DIR__ . "/../../utilities/tokengenerator.php");
 require_once(__DIR__ . "/../Requests/Signuprequest.php");
 use App\Config\Database;
-use App\Models\User;
+use App\Models\Auth\User;
 use App\Utilities\TokenGenerator;
 use App\Requests\SignupRequest;
 

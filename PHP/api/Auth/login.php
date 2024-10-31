@@ -5,9 +5,9 @@ header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header('Content-Type: application/json');
 
-require_once __DIR__ . '/../vendor/autoload.php';
-require_once(__DIR__ . "/../assets/Controllers/logincontrol.php");
-require_once(__DIR__ . "/../assets/Routes/loginroutes.php");
+require_once __DIR__ . '/../../vendor/autoload.php';
+require_once(__DIR__ . "/../../assets/controllers/login.php");
+require_once(__DIR__ . "/../../assets/routes/login.php");
 
 use App\Models\LoginRoute;
 

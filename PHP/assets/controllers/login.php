@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Controllers;
-require_once __DIR__ . "/../Models/loginuser.php";
+require_once __DIR__ . "/../models/auth/user.php";
+require_once __DIR__ . "/../models/auth/login.php";
+
 require_once __DIR__ . "/../../utilities/tokengenerator.php";
 require_once __DIR__ . "/../../utilities/authorisation.php"; // Add this
 
-use App\Models\User;
+use App\Models\Auth\User;
 use App\Utilities\TokenGenerator;
 use App\Utilities\Authorization;
 

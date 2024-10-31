@@ -3,13 +3,18 @@
 namespace App\Models;
 
 require_once(__DIR__ . "/../../config/Database.php");
-require_once(__DIR__ . "/../Models/loginuser.php");
+require_once(__DIR__ . "/../models/auth/Signup.php");
 require_once(__DIR__ . "/../views/login.php");
+require_once(__DIR__ . "/../models/auth/user.php");
+require_once(__DIR__ . "/../models/auth/login.php");
+
 require_once(__DIR__ . "/../../utilities/TokenGenerator.php");
 require_once(__DIR__ . "/../../utilities/authorisation.php"); 
 
 use App\Controllers\LoginController;
-use App\Models\User;
+use App\Models\Auth\User;
+// use App\Models\Auth\User;
+// use App\Models\User;
 use App\Controllers\LoginView;
 use App\Config\Database;
 use App\Utilities\TokenGenerator;

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Auth;
 
 use App\Utilities\Authorization;
-require_once __DIR__ . "/../../vendor/autoload.php";
+require_once __DIR__ . "/../../../vendor/autoload.php";
 require_once __DIR__ . "/../../../utilities/tokengenerator.php";
 include_once(__DIR__ . '/../../../config/Database.php');
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Auth;
 
 use PDO;
 
-class User {
+class login {
     private $db;
 
     public function __construct($db) {
@@ -13,6 +13,9 @@ class User {
 
     public function checkUser($email, $password) {
         // Check in users table
+        if ($this->db === null) {
+            throw new Exception("Database connection not established.");
+        }
         $stmt = $this->db->prepare("SELECT user_id, username, user_password, 'user' AS user_type FROM users WHERE user_email = :email");
         $stmt->execute(['email' => $email]);
     
