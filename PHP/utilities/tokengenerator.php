@@ -9,7 +9,7 @@ use Firebase\JWT\ExpiredException;
 use Firebase\JWT\SignatureInvalidException;
 
 class TokenGenerator {
-    private static $12345DcodeKey = '12345DCODE';
+    private static $secretKey = '12345DCODE';
     private static $algorithm = 'HS256';
     public function generateToken($userId, $username, $email, $isAdminSignup) {
         // Example code to assign role
@@ -33,7 +33,7 @@ class TokenGenerator {
         ];
         
         // Encode and return the token
-        return JWT::encode($payload, self::$12345DcodeKey, self::$algorithm);
+        return JWT::encode($payload, self::$secretKey, self::$algorithm);
     }
     
 
@@ -41,10 +41,10 @@ class TokenGenerator {
     public static function decodeToken($token) {
         try {
             // Store static properties in local variables
-            $12345DcodeKey = self::$12345DcodeKey;
+            $secretKey = self::$secretKey;
     
-            // Decode the token, passing the 12345Dcode key wrapped in a Key object
-            $decoded = JWT::decode($token, new Key($12345DcodeKey, 'HS256'));
+            // Decode the token, passing the secret key wrapped in a Key object
+            $decoded = JWT::decode($token, new Key($secretKey, 'HS256'));
     
             return [
                 'status' => 'success',

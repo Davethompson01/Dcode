@@ -11,7 +11,7 @@ const checkAuth = (req, res, next) => {
     // Remove 'Bearer ' prefix if present
     const cleanToken = token.startsWith('Bearer ') ? token.slice(7) : token;
 
-    jwt.verify(cleanToken, '1234Sheda', (err, decoded) => {
+    jwt.verify(cleanToken, '12345DCODE', (err, decoded) => {
         if (err) {
             return res.status(403).json({ status: 'error', message: 'Invalid authorization token.', error: err.message });
         }
