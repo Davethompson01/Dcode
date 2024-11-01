@@ -7,7 +7,7 @@ use Firebase\JWT\Key;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 class Authorization {
-    private $secretKey="12345DCODE";
+    private $secretKey="12345Dcode";
 
     public function __construct($secretKey) {
         $this->secretKey = $secretKey;

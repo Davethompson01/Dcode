@@ -66,7 +66,7 @@ class User {
     }
 
     public static function getUserByToken($token) {
-        $secretKey = "Dcode"; 
+        $secretKey = "12345Dcode"; 
         $auth = new Authorization($secretKey);
         $decoded = $auth->authorize($token);  // Call the authorize method
 
