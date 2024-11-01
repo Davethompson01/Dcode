@@ -1,4 +1,3 @@
-// models/order.js
 const pool = require("../../config/database");
 
 class Order {
@@ -30,7 +29,7 @@ class Order {
       );
       const orderId = orderResult.insertId;
 
-      // Insert each product as an order item
+      // Ensure each product is properly structured for the SQL query
       const orderItems = products.map((product) => [
         orderId,
         product.product_id,
@@ -39,6 +38,7 @@ class Order {
         product.price * product.quantity,
       ]);
 
+      // Insert each product as an order item
       await connection.query(
         "INSERT INTO order_items (order_id, product_id, quantity, price, total) VALUES ?",
         [orderItems]
