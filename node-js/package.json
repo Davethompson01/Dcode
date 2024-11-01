@@ -18,6 +18,7 @@
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.3",
     "pg": "^8.13.1",
-    "pg-promise": "^11.10.1"
+    "pg-promise": "^11.10.1",
+    "stripe": "^17.3.0"
   }
 }
