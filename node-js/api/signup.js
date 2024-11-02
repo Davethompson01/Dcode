@@ -10,7 +10,7 @@ app.use(cors()); // This will allow all origins. You can configure it further if
 app.use(express.json());
 app.use('/api', signupRoutes);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

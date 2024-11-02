@@ -116,6 +116,20 @@ class Product {
             return { error: 'Failed to delete product: ' + error.message };
         }
     }
+
+    static async getProductById(productId) {
+        try {
+            const result = await pool.query(
+                "SELECT * FROM products WHERE product_id = $1",
+                [productId]
+            );
+            return result.rows[0] || null; // Returns product if found, or null if not found
+        } catch (error) {
+            console.error('Error fetching product by ID:', error);
+            return { error: 'Failed to fetch product: ' + error.message };
+        }
+    }
+    
 }
 
 module.exports = Product;

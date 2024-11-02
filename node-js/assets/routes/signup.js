@@ -1,6 +1,9 @@
 const express = require("express");
 const axios = require("axios");
 const router = express.Router();
+const stripe = require("stripe")(
+  "sk_test_51QFDiJDFpuWfcKrFXjfG6JXyTbmTB6ynWhH1gynj52DpUA8OsYIPFizOT5Ri1kn6oNd0ycDpJqGyQetIJvgJfLLY00mjQuryO6"
+);
 
 // Endpoint for user signup
 router.post("/signup/user", async (req, res) => {
@@ -9,11 +12,27 @@ router.post("/signup/user", async (req, res) => {
       "http://localhost/D_code/PHP/api/Auth/UserSignup.php",
       req.body
     );
+
+    if (response.status === 200) {
+      // Create a Stripe customer
+      const customer = await stripe.customers.create({
+        email: req.body.email, // Use the email provided during signup
+      });
+
+      // Include the user ID from the response
+      return res.status(200).json({
+        status: "success",
+        message: "User signup successful.",
+        userId: response.data.userId, // Include the user ID from the PHP API
+        customerId: customer.id, // Optionally include the Stripe customer ID
+      });
+    }
+
     res.status(response.status).json(response.data);
   } catch (error) {
     res.status(error.response?.status || 500).json({
       status: "error",
-      message: "User  signup failed.",
+      message: "User signup failed.",
       error: error.message,
     });
   }
