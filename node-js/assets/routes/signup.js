@@ -23,8 +23,8 @@ router.post("/signup/user", async (req, res) => {
       return res.status(200).json({
         status: "success",
         message: "User signup successful.",
-        userId: response.data.userId, // Include the user ID from the PHP API
-        customerId: customer.id, // Optionally include the Stripe customer ID
+        userId: response.data.userId,
+        customerId: customer.id, 
       });
     }
 

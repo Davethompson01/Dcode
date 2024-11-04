@@ -8,8 +8,8 @@ use PDOException;
 class Database
 {
     private $host = 'localhost';
-    private $db_name = 'Dcode';
-    private $username = 'dcode';
+    private $db_name = 'govrwrtw_Dcode';
+    private $username = 'govrwrtw_Dcode';
     private $password = 'dcode';
     private $connection;
 
@@ -23,7 +23,7 @@ class Database
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             echo "Connected successfully to PostgreSQL!";
             
-        } catch (PDOException $e) {
+        } catch (PDOException $e){
             echo "Connection error: " . $e->getMessage();
         }
         return $this->connection;
